@@ -17,8 +17,11 @@ import java.util.Set;
 @SuppressWarnings("serial")
 public class LifeComponent extends JComponent {
         
-    private static final int CELL_SIZE = 5;
-    private static final int GUTTER_SIZE = 1;
+    public static final int CELL_SIZE = 5;
+    public static final int GUTTER_SIZE = 1;
+
+    public static final Color ALIVE_COLOR = Color.GREEN;
+    public static final Color DEAD_COLOR = Color.BLACK;
     
     private GameBoard board;
     private Set<Point> foundCells = new HashSet<Point>();
@@ -93,6 +96,7 @@ public class LifeComponent extends JComponent {
             return;     // refuse to paint a null board
         
         Graphics2D g2 = (Graphics2D) g;
+        g2.setBackground(Color.BLACK);
         g2.setPaint(Color.WHITE);
         int bw = cellDistance(board.getWidth());
         int bh = cellDistance(board.getHeight());
@@ -103,7 +107,7 @@ public class LifeComponent extends JComponent {
             g2.fillRect(0, y, bw, GUTTER_SIZE);
         }
         
-        g2.setPaint(Color.BLACK);
+        g2.setPaint(getBoard().getRuleSet().getAliveColor());
         
         for (int x = 0; x < board.getWidth(); x++) {
             int xpos = cellDistance(x);
